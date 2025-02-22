@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="UTF-8" />
+	<title>MaleSoncneElektrarne</title>
+</h:head>
+
+<h:body>
+<f:view>
+	<f:metadata>
+		<f:viewParam name="id" value="#{elektrarne.selectedIdSkupnost}" />
+	</f:metadata>
+
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="All skupnosti" outcome="all"/>
+			<p:menuitem value="Add new skupnost" outcome="edit">
+				<f:param name="ime" value="null"/>
+			</p:menuitem>
+		</p:menubar>
+	</h:form>
+
+	<hr />
+
+	<h:form>
+
+
+		Skrbnik ime: <p:inputText id="skrbnik_ime" value="#{elektrarne.selectedSkupnost.imeSkrbnika}"/><br/>
+		Skrbnik priimek: <p:inputText id="skrbnik_priimek" value="#{elektrarne.selectedSkupnost.priimekSkrbnika}"/><br/>
+		Skrbnik email: <p:inputText id="skrbnik_email" value="#{elektrarne.selectedSkupnost.emailSkrbnika}"/><br/>
+		Ime: <p:inputText id="ime_s" value="#{elektrarne.selectedSkupnost.ime}" validatorMessage="Insert valid name">
+					<f:validateRequired />
+				</p:inputText> * <h:message for="ime_s" style="color:red" />
+		<br/><br/>
+		<p:commandButton value="Save" action="#{elektrarne.saveSkupnost()}"/>
+	</h:form>
+
+</f:view>
+</h:body>
+
+</html>
+
+
+
+
+
+				
+					

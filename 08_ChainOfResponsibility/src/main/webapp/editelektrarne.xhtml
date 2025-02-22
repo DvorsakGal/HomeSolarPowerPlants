@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8" />
+    <title>MaleSoncneElektrarne</title>
+</h:head>
+
+<h:body>
+    <f:view>
+
+        <h:form>
+            <p:menubar>
+                <p:menuitem value="All skupnosti" outcome="all"/>
+                <p:menuitem value="Add new skupnost" outcome="edit">
+                    <f:param name="ime" value="null"/>
+                </p:menuitem>
+            </p:menubar>
+        </h:form>
+
+            <hr />
+
+        <f:metadata>
+            <f:viewParam name="id" value="#{elektrarne.selectedIdSkupnost}" />
+        </f:metadata>
+
+
+            <h:form>
+                Name: <p:inputText value="#{elektrarne.selectedMSE.imeLastnika}" /><br/>
+                Surname: <p:inputText value="#{elektrarne.selectedMSE.priimekLastnika}" /><br/>
+                Email: <p:inputText value="#{elektrarne.selectedMSE.email}" /><br/>
+                Longitude: <p:inputText value="#{elektrarne.selectedMSE.longitude}"/><br/>
+                Latitude: <p:inputText value="#{elektrarne.selectedMSE.latitude}"/><br/>
+                Zmogljivost: <p:inputText value="#{elektrarne.selectedMSE.zmogljivost}"/><br/>
+                Naziv: <p:inputText id="n_naziv" value="#{elektrarne.selectedMSE.naziv}" validatorMessage="Insert valid naziv">
+                <f:validateRequired />
+                </p:inputText> * <h:message for="n_naziv" style="color:red" />
+                <br/><br/>
+                <h:commandButton value="Save" actionListener="#{elektrarne.shraniMSE(elektrarne.selectedMSE, elektrarne.selectedIdSkupnost)}" />
+            </h:form>
+
+    </f:view>
+</h:body>
+
+</html>

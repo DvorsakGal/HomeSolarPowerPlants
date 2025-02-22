@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta charset="UTF-8" />
+    <title>MaleSoncneElektrarne</title>
+</h:head>
+
+<h:body>
+
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="All skupnosti" outcome="all"/>
+            <p:menuitem value="Add new skupnost" outcome="edit">
+                <f:param name="ime" value="null"/>
+            </p:menuitem>
+        </p:menubar>
+    </h:form>
+
+    <h1>Seznam Malih Sončnih Elektrarn</h1>
+
+    <f:metadata>
+        <f:viewParam name="ime" value="#{elektrarne.selectedIme}" />
+    </f:metadata>
+
+        <p:link value="Nazaj na skupnost" outcome="details" /><br/>
+        <h:link outcome="details" value="Nazaj na skupnost">
+            <f:param name="ime" value="#{elektrarne.selectedIme}"/>
+        </h:link>
+
+        <p:link outcome="editelektrarne" value="Add elektrarne">
+            <f:param name="elektrarna" value="null"/>
+        </p:link>
+
+        <div class="card">
+            <h:form>
+                <p:dataTable id="msetable" var="mse" value="#{elektrarne.selectedSkupnost.elektrarne}">
+                    <p:column headerText="Naziv">
+                        <h:link outcome="msedetails" value="#{mse.naziv}">
+                            <f:param name="naziv" value="#{mse.naziv}"/>
+                        </h:link>
+                    </p:column>
+
+                    <p:column headerText="Ime lastnika">
+                        <h:outputText value="#{mse.imeLastnika}" />
+                    </p:column>
+
+                    <p:column headerText="Priimek lastnika">
+                        <h:outputText value="#{mse.priimekLastnika}" />
+                    </p:column>
+
+                    <p:column headerText="Email lastnika">
+                        <h:outputText value="#{mse.email}" />
+                    </p:column>
+
+                    <p:column headerText="Zmogljivost(kW)">
+                        <h:outputText value="#{mse.zmogljivost}" />
+                    </p:column>
+
+                    <p:column headerText="Longitude">
+                        <h:outputText value="#{mse.longitude}" />
+                    </p:column>
+
+                    <p:column headerText="Latitude">
+                        <h:outputText value="#{mse.latitude}" />
+                    </p:column>
+
+                    <p:column headerText="Edit">
+                        <p:linkButton outcome="editelektrarne" value="Edit">
+                            <f:param name="elektrarna" value="#{mse.naziv}"/>
+                        </p:linkButton>
+                    </p:column>
+
+                    <p:column headerText="Delete">
+                        <p:commandButton value="Delete" update="msetable" action="#{elektrarne.izbrisiMSE(mse)}" styleClass="ui-button-danger" icon="pi pi-times">
+                            <p:confirm header="Confirmation" message="Do you want to delete this record?" icon="pi pi-info-circle"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
+            </h:form>
+        </div>
+
+</h:body>
+
+</html>
+
+

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="UTF-8" />
+	<title>MaleSoncneElektrarne</title>
+</h:head>
+
+<h:body>
+<f:view>
+<h:form>
+
+		<p:menubar>
+			<p:menuitem value="All skupnosti" outcome="all"/>
+			<p:menuitem value="Add new skupnost" outcome="edit">
+				<f:param name="ime" value="null"/>
+			</p:menuitem>
+		</p:menubar>
+
+
+	<hr />
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{elektrarne.selectedIdSkupnost}" /><!--to bo ocitno mogo bit id-->
+	</f:metadata>
+
+	<div class="card">
+		<h5>Podrobni podatki za skupnost</h5>
+		<p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+			<h:outputText value="Ime:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.ime}"/>
+
+			<h:outputText value="Ime skrbnika:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.imeSkrbnika}"/>
+
+			<h:outputText value="Priimek skrbnika:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.priimekSkrbnika}"/>
+
+			<h:outputText value="Email skrbnika:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.emailSkrbnika}"/>
+
+			<h:outputText value="Insertred:"/>
+			<h:outputText value="#{elektrarne.selectedSkupnost.timestamp}"/>
+		</p:panelGrid>
+	</div>
+
+	<p:link outcome="editelektrarne" value="Add elektrarne">
+		<f:param name="id" value="#{elektrarne.selectedIdSkupnost}"/>
+	</p:link>
+
+
+	<h3>Selected skupnost</h3>
+	<h:outputText value="#{elektrarne.selectedSkupnost.id}"/>	<!--TO JE SLUŽILO ZA TEST-->
+	<h:outputText value="#{elektrarne.trenutnaProizvodnja(elektrarne.selectedSkupnost)}"/>
+</h:form>
+	<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+	<!--
+	<h:link outcome="seznamMSEjev" value="Preglej MSEje">
+		<f:param name="ime" value="#{elektrarne.selectedIme}"/>
+	</h:link>
+	-->
+	<div class="card">
+		<h:form>
+			<p:dataTable id="msetable" var="mse" value="#{elektrarne.selectedSkupnost.elektrarne}">
+
+				<p:column headerText="Naziv">
+					<h:link outcome="msedetails" value="#{mse.naziv}">
+						<f:param name="naziv" value="#{mse.naziv}"/>
+					</h:link>
+				</p:column>
+
+				<p:column headerText="Ime lastnika">
+					<h:outputText value="#{mse.imeLastnika}" />
+				</p:column>
+
+				<p:column headerText="Priimek lastnika">
+					<h:outputText value="#{mse.priimekLastnika}" />
+				</p:column>
+
+				<p:column headerText="Email lastnika">
+					<h:outputText value="#{mse.email}" />
+				</p:column>
+
+				<p:column headerText="Zmogljivost(kW)">
+					<h:outputText value="#{mse.zmogljivost}" />
+				</p:column>
+
+				<p:column headerText="Longitude">
+					<h:outputText value="#{mse.longitude}" />
+				</p:column>
+
+				<p:column headerText="Latitude">
+					<h:outputText value="#{mse.latitude}" />
+				</p:column>
+
+				<p:column headerText="Edit">
+					<p:linkButton outcome="editelektrarne" value="Edit">
+						<f:param name="elektrarna" value="#{mse.naziv}"/>
+					</p:linkButton>
+				</p:column>
+
+				<p:column headerText="Delete">
+					<p:commandButton value="Delete" update="msetable" action="#{elektrarne.izbrisiMSE(mse)}" styleClass="ui-button-danger" icon="pi pi-times">
+						<p:confirm header="Confirmation" message="Do you want to delete this record?" icon="pi pi-info-circle"/>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+				<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
+		</h:form>
+	</div>
+
+
+</f:view>
+</h:body>
+
+</html>
+
+		<!-- fgdggdsgdg
+            TO DO: Implementacija Add new za dodajanje elektrarn v skupnost; torej rabiš dva layera namesto enega
+            - ali rabim posebej edit in details še za mse??? verjetno ja
+            - EDIT za elektrarno (zdaj redirecta na skupnost)	DONE
+            - DELETE za elektrarno (trenutno brez učinka)
+            - DETAILS za elektrarno (trenutno brez učinka) DONE
+
+            !!!: ALI LAHKO ZA LEADING COLUMN PRI MSE IZBEREM NEKAJ POLJUBNEGA (ID, NAZIV...), KER LOKACIJA JE MALO NEPRAKTICNA
+
+            - ZRIHTAJ DA PRI DODAJANJU PREVERI, ALI JE NAZIV ELEKTRARNE IN IME SKUPNOSTI UNIQUE
+            - ODSTRANI IME IN NAZIV IZ INTERFACE-A ZA EDIT - TO DVOJE SE NE BO SPREMINJALO
+            -->
